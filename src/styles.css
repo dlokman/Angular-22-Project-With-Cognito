@@ -1,0 +1,478 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import 'tailwindcss';
+@import "@copilotkit/angular/styles.css";
+
+/*
+    When you import tailwindcss into your project, Preflight is automatically injected into the base layer:
+
+    **CSS**
+    @layer theme, base, components, utilities;
+
+    @import "tailwindcss/theme.css" layer(theme);
+    @import "tailwindcss/preflight.css" layer(base);
+    @import "tailwindcss/utilities.css" layer(utilities);
+
+
+    Theme variables: https://tailwindcss.com/docs/theme#default-theme-variable-reference
+    Github Tailwind files:
+      1) https://github.com/tailwindlabs/tailwindcss/blob/main/packages/tailwindcss/theme.css
+      2) https://github.com/tailwindlabs/tailwindcss/blob/main/packages/tailwindcss/preflight.css
+      3) https://github.com/tailwindlabs/tailwindcss/blob/main/packages/tailwindcss/utilities.css
+
+    Preflight CSS applied: https://github.com/tailwindlabs/tailwindcss/blob/main/packages/tailwindcss/preflight.css
+    Default Color palette: https://tailwindcss.com/docs/colors#default-color-palette-reference
+    Quick Reference: https://tailwindcss.com/docs/hover-focus-and-other-states#quick-reference
+*/
+
+
+/*Project theme*/
+@theme {
+  --font-roboto: "Roboto", sans-serif;  /*Google Roboto Font */
+  --color-mint-500: oklch(0.72 0.11 178);
+  --color-avocado-100: oklch(0.99 0 0);
+  --border-color: rgb(179, 181, 186);
+  --color-error: #f44336;
+}
+
+/*@theme & @theme inline → for Tailwind theme tokens that should participate in Tailwind utilities like bg-surface, text-surface, etc.
+  aliases that reference other CSS variables*/
+@theme inline {
+  --color-surface: var( --color-mint-500);
+}
+
+/* :root → for regular global CSS variables, especially third-party library variables such as PrimeNG tokens. */
+:root {
+  --p-some-color: var(--color-orange-500) !important;
+}
+
+
+/* 2. Base element styles */
+@layer base {
+/* h1 {
+    font-size: var(--text-2xl);
+  }
+  h2 {
+    font-size: var(--text-xl);
+  }
+  h3 {
+    font-size: var(--text-lg);
+  }
+  a {
+    color: var(--color-blue-600);
+    text-decoration-line: underline;
+  }*/
+}
+
+/* 3. Reusable component classes */
+@layer components {
+  .card {
+    @apply rounded-lg bg-white p-6 shadow-lg;
+  }
+}
+
+@utility container {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+
+  @media (min-width:2000px) {
+    .container {
+      margin-top: 50px;
+      max-width: 3500px;
+    }
+  }
+}
+
+/* 4. Custom utility classes. will override same classes or overlapping properties if applied  */
+@layer utilities {
+  .text-red {
+    color: red;
+  }
+}
+
+
+/* https://github.com/tailwindlabs/tailwindcss/pull/14993 */
+/* --spacing: 4px;   mt-1=== 0.25rem == 1/4*16 = 4px*/
+/*
+  1rem = 16px
+  mt-0 -> 0rem
+  mt-1 -> 0.25rem
+  mt-2 -> 0.5rem
+  mt-3 -> 0.75rem
+  mt-4 -> 1rem
+  mt-5 -> 1.25rem
+  mt-6 -> 1.5rem
+  mt-7 -> 1.75rem
+  mt-8 -> 2rem
+*/
+
+/* Sample component layer*/
+/*
+@layer components {
+
+}*/
+
+
+/* html, body {
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  line-height: 1.2;            / * PrimeNg Docs uses line-height 1.2 for html tag in css* /
+  font-size: 14px !important;  / *1rem = 14px needed for PrimeNg. PrimeNg Docs uses font-size 14px for html tag in css* /
+} */
+
+/* Can use both nested selectors and nested classes in plain css now since Modern browsers now support a feature called CSS Nesting */
+.custombutton {
+  @apply bg-sky-500 hover:bg-sky-700 px-4 py-2 text-sm leading-5 rounded-full font-semibold text-white;
+
+  /* Nested Selector '&' =>  The & symbol is used to reference the parent selector.
+     &:hover means the :hover state of .custombutton */
+  &:hover {
+    font-size: 2rem;
+  }
+
+  /* Nested Classes => only apply .nestedclass  to elements that are inside of element with custombutton class*/
+  .nestedclass {
+    font-style:italic;
+  }
+}
+
+
+.panel {
+  background-color: var(--color-white);
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+
+    .panel-header {
+      border-bottom: 1px solid var(--border-color);
+      text-align: left;
+      font-size: 19px;
+      font-family: "roboto", Helvetica, Arial, sans-serif;
+      font-weight: 500;
+      padding: 10px 15px 5px 15px;
+      color: #003968;
+      background: #CEE3F6;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    .panel-body {
+      padding-left: 15px;
+      padding-right: 15px;
+      padding-bottom: 15px;
+      padding-top: 15px;
+    }
+
+    .panel-footer {
+      background-color: #E6EBF2;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      @apply w-full p-2.5 flex justify-end gap-2;
+    }
+}
+
+
+
+/**********************Only applicable if don't use PrimeNg and need custom styling for buttons and anchor**********************/
+.btn-cancel {
+  background-color: rgb(255, 255, 255);
+  @apply py-1.5 px-3 rounded-sm border border-gray-200;
+  font-size: 15px;
+}
+
+.btn-cancel:hover {
+  background-color: #E6EBF2;
+  cursor: pointer;
+}
+
+.btn-default {
+  background-color: rgb(255, 255, 255);
+  @apply py-1.5 px-3 rounded-sm border border-gray-200;
+  font-size: 15px;
+}
+
+.btn-disabled {
+  font-size: 15px;
+  @apply bg-gray-200 border-gray-300 text-gray-500 cursor-not-allowed py-1.5 px-3 rounded-sm border;
+}
+
+.btn-default:hover {
+  background-color: #E6EBF2;
+}
+
+.btn-default:disabled {
+  background-color: rgb(255, 255, 255);
+  color: rgb(169, 169, 169);
+  border-color: rgb(189, 189, 189);
+  @apply border cursor-not-allowed;
+}
+
+.btn, .btn-save {
+  background-color: rgb(0, 118, 200) !important;
+  @apply py-1.5 px-3 rounded-sm border border-blue-900;
+  color: white !important;
+  font-size: 15px;
+}
+
+.btn:hover, .btn-save:hover {
+  text-decoration: none !important;
+  background-color: #003968 !important;
+  cursor: pointer !important;
+}
+
+.btn:disabled, .btn-save:disabled {
+  background-color: #6ba0c5 !important;
+  @apply border-slate-500! cursor-default!;
+}
+
+.btn-nav {
+  background-color: white;
+}
+.btn-nav:hover {
+  cursor: pointer;
+}
+
+.btn-nav:disabled {
+  @apply text-gray-400
+}
+
+.btn-warning {
+  @apply bg-orange-500 text-white border border-orange-600 px-3 py-1.5 rounded-sm;
+}
+
+.btn-warning:hover {
+  @apply bg-orange-600;
+}
+
+.btn-warning:disabled {
+  @apply bg-orange-300 border-orange-300 cursor-not-allowed;
+}
+
+.btn-primary {
+  background-color: rgb(0, 110, 187);
+  @apply py-1.5 px-3 rounded-sm border border-blue-900 text-white cursor-pointer;
+  font-size: 15px;
+}
+
+.btn-success {
+  background-color: rgb(34, 134, 0);
+  @apply py-1.5 px-3 rounded-sm border border-green-900 text-white cursor-pointer;
+  font-size: 15px;
+}
+
+.btn-success:disabled {
+  background-color: rgb(245, 245, 245);
+  color: rgb(169, 169, 169);
+  border-color: rgb(189, 189, 189);
+  @apply border cursor-not-allowed;
+}
+
+.btn-success:not(:disabled):hover {
+  text-decoration: none;
+  background-color: #185E00;
+}
+
+a.btn-primary {
+  color: rgb(255, 255, 255) !important;
+  font-weight: 400 !important;
+}
+
+.btn-primary:hover {
+  text-decoration: none;
+  background-color: rgb(0, 57, 104);
+}
+
+a.btn-primary {
+  color: rgb(255, 255, 255) !important;
+  font-weight: 400 !important;
+}
+
+.btn-primary:hover {
+  text-decoration: none;
+  background-color: rgb(0, 57, 104);
+}
+
+.btn-primary:disabled {
+  background-color: #6ba0c5;
+  @apply border-slate-500;
+  pointer-events: none;
+}
+
+.btn-danger {
+  background-color: rgb(217, 83, 79);
+  border-color: rgb(217, 83, 79);
+  @apply py-1.5 px-3 rounded-sm border text-white;
+}
+
+.btn-danger:hover {
+  background-color: #c9302c;
+}
+
+.btn-primary:disabled {
+  background-color: #6ba0c5;
+  @apply border-slate-500;
+}
+
+/**********************Only applicable if don't use PrimeNg and need custom styling for buttons and anchor End**********************/
+
+.custom-input{
+  @apply rounded-md bg-white px-3 py-1.5 text-sm text-gray-900 placeholder:text-gray-400 border border-gray-300 disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 focus:border-emerald-500 focus:outline-0 focus:outline-emerald-500 focus-visible:border-emerald-500 focus-visible:outline-0 focus-visible:outline-emerald-500;
+}
+
+.custom-input.ng-invalid.ng-dirty {
+  border-color: var(--color-error)
+}
+
+.custom-input.ng-invalid.ng-dirty::placeholder{
+  color: var(--color-error)
+}
+
+a:not(:disabled) {
+  @apply cursor-pointer
+}
+
+.text-primary {
+  color: #337ab7;
+}
+
+.disabled, [disabled] {
+  cursor: not-allowed;
+}
+
+.text-error {
+  @apply text-red-700;
+}
+
+.text-warning {
+  @apply text-orange-700;
+}
+
+.alert-error {
+  @apply bg-red-100 border-red-300 text-red-900 p-1 rounded-md border border-solid;
+}
+
+.alert-warning {
+  @apply bg-orange-100 border-orange-300 text-orange-900 p-1 rounded-md border border-solid;
+}
+
+/* .alert-info {
+  @apply bg-cyan-100 border-cyan-300 text-cyan-900 p-4 rounded-md border border-solid;
+} */
+
+.alert-info {
+  @apply bg-cyan-100 border-cyan-300 text-cyan-900 p-1 rounded-md border border-solid;
+}
+.alert-success {
+  @apply bg-green-100 border-green-300 text-green-900 p-1 rounded-md border border-solid;
+}
+
+.icon-color {
+  color: #337ab7;
+}
+
+.loading-indicator{
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.center-overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.error-panel {
+    @apply shadow-lg bg-white md:w-3/5 md:min-w-[500px] md:max-w-[700px];
+    .panel-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #0a3b63;
+      color: white;
+      height: 82px;
+      font-weight: 100;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 2.4rem;
+    }
+
+    .header-text {
+        transform: scaleX(0.8);
+    }
+
+    .panel-body {
+        height: 180px;
+        text-align: center;
+        font-size: 20px;
+        padding: 15px 25px;
+    }
+
+    .panel-footer {
+        background-color: rgb(227, 231, 238);
+        border-top: solid 1px rgb(137, 137, 137);
+        padding: 10px 15px 10px 10px;
+        text-align: right;
+    }
+
+    .alert {
+        font-size: 14px;
+        text-align: center;
+        margin-bottom: 17px;
+        border-radius: 0;
+        color: #000;
+        padding: 14px 12px;
+        background: #fff4f5;
+        border: 1px solid #ffd2d6;
+    }
+
+    .message {
+        margin: 0px !important;
+        padding: 0px !important;
+    }
+}
+
+.home-button:hover {
+  cursor: pointer;
+}
+
+
+
+table.custom-table {
+  @apply w-full max-w-full border-collapse border border-gray-400;
+
+  thead {
+    @apply bg-blue-50;
+     tr {
+        th {
+          @apply cursor-pointer px-4 py-2 text-left text-sm text-slate-700 font-semibold border border-gray-300;
+        }
+     }
+  }
+
+  tbody {
+      tr {
+          @apply  hover:bg-gray-100;
+          &:nth-child(even) {
+            @apply bg-gray-50;
+          }
+          td {
+            @apply px-4 py-2 text-left text-sm font-normal text-gray-800 border border-gray-300;
+          }
+      }
+  }
+}
+
+
+.testclass {
+  background-color: rgb(0, 118, 200) !important;
+}

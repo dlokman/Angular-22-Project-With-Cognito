@@ -1,0 +1,25 @@
+#app-toolbar{
+  background-color: #003968;
+  color: white
+}
+
+.user-name{
+  margin: 0 15px 0 0;
+  font-size: 15px;
+
+}
+.user-icon{
+  width: 21px;
+  height: 21px;
+}
+
+/* .logo-image {
+  height: 36px;
+  width: 36px;;
+} */
+
+.header-text{
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
+}
