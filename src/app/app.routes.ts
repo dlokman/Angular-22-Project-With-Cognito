@@ -22,6 +22,15 @@ export const routes: Routes = [
       },
 		]
 	},
+  {
+		path: '',
+    loadComponent: () => import('./layout/external/external-layout').then(m => m.ExternalLayout),
+		children: [
+			{ path: 'auth/callback',
+        loadComponent: () => import('./pages/callback/callback').then(m => m.Callback)
+      },
+		]
+	},
  	{
 		path: '',
     loadComponent: () => import('./layout/external/external-layout').then(m => m.ExternalLayout),
