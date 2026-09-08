@@ -2,6 +2,7 @@ import { Service, Signal, inject } from '@angular/core';
 import { AuthenticatedResult, OidcSecurityService, UserDataResult } from 'angular-auth-oidc-client';
 import { firstValueFrom} from 'rxjs';
 import { Router } from '@angular/router';
+import { ConfigService } from '../config-service/config-service';
 
 const AUTH_BROADCAST_CHANNEL = 'customersupport-auth';
 const LOGOUT_MESSAGE = 'logout';
@@ -10,6 +11,7 @@ const LOGOUT_MESSAGE = 'logout';
 export class AuthService {
   private readonly oidcSecurityService = inject(OidcSecurityService);
   private readonly router = inject(Router);
+  private readonly configService = inject(ConfigService);
 
   private readonly authChannel = typeof BroadcastChannel === 'undefined' ? null : new BroadcastChannel(AUTH_BROADCAST_CHANNEL);
 
@@ -46,7 +48,19 @@ export class AuthService {
   async logout(): Promise<void> {
     this.authChannel?.postMessage(LOGOUT_MESSAGE);
     await this.revokeRefreshTokenAndClearLocalState();
-    this.router.navigate(['/logout']);
+
+    const logoutUri = this.configService.appConfig.cognito.postLogoutRedirectUri;
+    const cognitoDomain = this.configService.appConfig.cognito.domain;
+    const cognitoClientId = this.configService.appConfig.cognito.clientId;
+
+    const cognitoLogoutUrl  =
+      `${cognitoDomain}/logout` +
+      `?client_id=${encodeURIComponent(cognitoClientId)}` +
+      `&logout_uri=${encodeURIComponent(logoutUri)}`;
+
+    window.location.assign(cognitoLogoutUrl); // clearing the Cognito Managed Login browser session cookie.
+
+    // this.router.navigate(['/logout']);
   }
 
   private async handleLogoutFromAnotherTab(): Promise<void> {

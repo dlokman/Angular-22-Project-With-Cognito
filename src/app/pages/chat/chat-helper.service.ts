@@ -1,6 +1,6 @@
-import { Service } from '@angular/core';
-import { BedrockAgentCoreClient, InvokeAgentRuntimeCommand } from '@aws-sdk/client-bedrock-agentcore';
-import { awsLocalConfig } from '../../config/aws.local';
+import { Service, inject } from '@angular/core';
+import { AuthService } from '../../core/auth-service/auth-service';
+import { ConfigService } from '../../core/config-service/config-service';
 
 export interface AgentInterrupt {
   id: string;
@@ -16,24 +16,10 @@ export type AgentEvent = { type: 'text'; text: string } | { type: 'interrupt'; i
 
 @Service()
 export class ChatHelperService {
-  // Strands Interrupt Test
-  //private readonly agentRuntimeArn = 'arn:aws:bedrock-agentcore:us-east-1:742752463290:runtime/AngularInterruptTest_MyAgent-FShQwX60wH';
 
-  // Pointing to Demo 1 - Agentcore Runtime for Restaurant Assistant
-  private readonly agentRuntimeArn = "arn:aws:bedrock-agentcore:us-east-1:742752463290:runtime/restaurantassistant_restaurant_assistant-0zuMLq5kJ2";
+  private readonly authService = inject(AuthService);
+  private readonly configService = inject(ConfigService);
 
-  private readonly client = new BedrockAgentCoreClient({
-    region: 'us-east-1',
-
-    // TODO- Integrate Cognito with Angular and Get from Parameter Store SecureString Or Secrets Manager.
-    // This Demo is just to quickly showcase CopilotKit Chat with Angular
-    credentials: {
-      accessKeyId: awsLocalConfig.accessKeyId,
-      secretAccessKey:  awsLocalConfig.secretAccessKey,
-    }
-  });
-
-  // done
   sendPrompt(sessionId: string, prompt: string): AsyncGenerator<AgentEvent> {
     return this.invoke(sessionId, { prompt });
   }
@@ -52,22 +38,43 @@ export class ChatHelperService {
   }
 
   private async *invoke(sessionId: string, payload: unknown): AsyncGenerator<AgentEvent> {
-    const response = await this.client.send(
-      new InvokeAgentRuntimeCommand({
-        agentRuntimeArn: this.agentRuntimeArn,
-        runtimeSessionId: sessionId,
-        qualifier: 'DEFAULT',
-        contentType: 'application/json',
-        accept: 'text/event-stream',
-        payload: JSON.stringify(payload),
-      }),
-    );
 
-    if (!response.response) {
+    const accessToken = await this.authService.getAccessToken();
+
+    if (!accessToken) {
+      throw new Error('No Cognito access token is available. Please sign in again.');
+    }
+
+    const encodedRuntimeArn = encodeURIComponent(this.configService.appConfig.agentCore.runtimeArn);
+    const qualifier = encodeURIComponent(this.configService.appConfig.agentCore.qualifier);
+
+    // https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-oauth.html
+    const url =
+      `${this.configService.appConfig.agentCore.endpoint}/runtimes/${encodedRuntimeArn}` +
+      `/invocations?qualifier=${qualifier}`;
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,  // username will come from the Cognito access token
+        'Content-Type': 'application/json',
+        'Accept': 'text/event-stream',
+        'X-Amzn-Bedrock-AgentCore-Runtime-Session-Id': sessionId,
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `AgentCore invocation failed: ${response.status} ${response.statusText}`,
+      );
+    }
+
+    if (!response.body) {
       throw new Error('AgentCore returned no response body.');
     }
 
-    const reader = response.response.transformToWebStream().getReader();
+    const reader = response.body.getReader();
     const decoder = new TextDecoder();
 
     let buffer = '';
@@ -108,58 +115,58 @@ export class ChatHelperService {
     }
   }
 
-private parseLine(line: string): AgentEvent | null {
-	const raw = line.trim();
+  private parseLine(line: string): AgentEvent | null {
+    const raw = line.trim();
 
-	if (!raw || raw.startsWith('event:')) {
-		return null;
-	}
+    if (!raw || raw.startsWith('event:')) {
+      return null;
+    }
 
-	const dataText = raw.replace(/^data:\s*/, '');
+    const dataText = raw.replace(/^data:\s*/, '');
 
-	console.log('RAW AGENTCORE EVENT:', dataText);
+    console.log('RAW AGENTCORE EVENT:', dataText);
 
-	if (!dataText || dataText === '[DONE]') {
-		return null;
-	}
+    if (!dataText || dataText === '[DONE]') {
+      return null;
+    }
 
-	try {
-		const data = JSON.parse(dataText);
+    try {
+      const data = JSON.parse(dataText);
 
-		if (data.type === 'interrupt' && data.interrupts?.length) {
-		return {
-			type: 'interrupt',
-			interrupt: data.interrupts[0],
-		};
-		}
+      if (data.type === 'interrupt' && data.interrupts?.length) {
+      return {
+        type: 'interrupt',
+        interrupt: data.interrupts[0],
+      };
+      }
 
-		if (data.type === 'message' && typeof data.message === 'string') {
-		return {
-			type: 'text',
-			text: data.message,
-		};
-		}
+      if (data.type === 'message' && typeof data.message === 'string') {
+      return {
+        type: 'text',
+        text: data.message,
+      };
+      }
 
-		const text = data?.event?.contentBlockDelta?.delta?.text;
+      const text = data?.event?.contentBlockDelta?.delta?.text;
 
-		if (typeof text === 'string') {
-		return {
-			type: 'text',
-			text,
-		};
-		}
+      if (typeof text === 'string') {
+      return {
+        type: 'text',
+        text,
+      };
+      }
 
-		if (typeof data === 'string') {
-		return {
-			type: 'text',
-			text: data,
-		};
-		}
+      if (typeof data === 'string') {
+      return {
+        type: 'text',
+        text: data,
+      };
+      }
 
-		return null;
-	} catch {
-		return null;
-	}
- }
+      return null;
+    } catch {
+      return null;
+    }
+  }
 
 }

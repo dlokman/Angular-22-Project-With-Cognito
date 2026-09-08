@@ -276,11 +276,6 @@
   background-color: #185E00;
 }
 
-a.btn-primary {
-  color: rgb(255, 255, 255) !important;
-  font-weight: 400 !important;
-}
-
 .btn-primary:hover {
   text-decoration: none;
   background-color: rgb(0, 57, 104);

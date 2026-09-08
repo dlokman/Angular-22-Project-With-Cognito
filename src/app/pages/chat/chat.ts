@@ -1,7 +1,7 @@
 import { Component, forwardRef, inject, signal } from '@angular/core';
 import { ChatState, CopilotChatInput, CopilotChatMessageView, CopilotChatView } from '@copilotkit/angular';
 import type { Message } from '@ag-ui/client';
-
+import { Router } from '@angular/router';
 import { AgentEvent, AgentInterrupt, ChatHelperService } from './chat-helper.service';
 
 @Component({
@@ -19,6 +19,7 @@ import { AgentEvent, AgentInterrupt, ChatHelperService } from './chat-helper.ser
 })
 export class Chat extends ChatState {
   private readonly chatHelper = inject(ChatHelperService);
+  private readonly router = inject(Router);
 
   readonly messages = signal<Message[]>([]);
   readonly inputValue = signal('');
@@ -81,7 +82,7 @@ export class Chat extends ChatState {
     this.interrupt.set(null);
 
     await this.run(
-      this.chatHelper.respondToInterrupt(this.sessionId(), interrupt.id, approved),
+      this.chatHelper.respondToInterrupt(this.sessionId(), interrupt.id, approved)
     );
   }
 
@@ -105,9 +106,11 @@ export class Chat extends ChatState {
 
       this.removeMessageIfEmpty(messageId);
     } catch (error) {
-      this.appendText( messageId, error instanceof Error ? error.message : 'Request failed.');
+        //this.appendText( messageId, error instanceof Error ? error.message : 'Request failed.');
+        console.error('AgentCore request failed:', error);
+        await this.router.navigateByUrl('/error');
     } finally {
-      this.isSubmitting.set(false);
+        this.isSubmitting.set(false);
     }
   }
 
