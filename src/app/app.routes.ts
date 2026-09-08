@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
-import { AuthGuard } from './core/guards/auth-guard';
+import { autoLoginPartialRoutesGuard } from 'angular-auth-oidc-client';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/chat' },
   {
 		path: '',
     loadComponent: () => import('./layout/pages/pages-layout').then(m => m.PagesLayout),
-    canActivateChild: [AuthGuard],
+    canActivateChild:  [autoLoginPartialRoutesGuard],   // will redirect to Cognito Login if authenticated
 		children: [
       { path: 'chat',
         loadComponent : () => import('./pages/chat/chat').then(m => m.Chat)
@@ -29,23 +29,14 @@ export const routes: Routes = [
 			{ path: 'auth/callback',
         loadComponent: () => import('./pages/callback/callback').then(m => m.Callback)
       },
-		]
-	},
- 	{
-		path: '',
-    loadComponent: () => import('./layout/external/external-layout').then(m => m.ExternalLayout),
-		children: [
-			{ path: 'not-authorized',
+      { path: 'not-authorized',
         loadComponent: () => import('./pages/errors/not-authorized/not-authorized').then(m => m.NotAuthorized)
       },
-		]
-	},
-  {
-		path: '',
-    loadComponent: () => import('./layout/external/external-layout').then(m => m.ExternalLayout),
-		children: [
-			{ path: 'app-initialization-error',
+      { path: 'app-initialization-error',
         loadComponent: () => import('./pages/errors/app-initialization-error/app-initialization-error').then(m => m.AppInitializationError)
+      },
+      { path: 'logout',
+        loadComponent: () => import('./pages/logout/logout').then(m => m.Logout)
       },
 		]
 	},

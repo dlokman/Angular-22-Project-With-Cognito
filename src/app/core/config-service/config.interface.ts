@@ -1,5 +1,16 @@
 export interface AppConfig {
-	callsApiUrl: string;
-  statusApiUrl: string;
-  userInfoApiUrl: string;
+  region: string;
+  cognito: {
+    authority: string;
+    clientId: string;
+    domain: string;
+    scope: string;
+    redirectUrl: string;
+    postLogoutRedirectUri: string;
+  };
+  agentCore: {
+    runtimeArn: string;
+    endpoint: string;
+    qualifier: string;
+  }
 }
