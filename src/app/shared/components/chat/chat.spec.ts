@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { Chat } from './chat';
 import { ChatHelperService } from './chat-helper.service';
+import { provideCopilotKit } from '@copilotkit/angular';
 
 describe('Chat', () => {
   let component: Chat;
@@ -12,6 +14,9 @@ describe('Chat', () => {
       imports: [Chat],
       providers: [
         provideRouter([]),
+        provideCopilotKit({
+          runtimeUrl: 'http://localhost/test',
+        }),
         {
           provide: ChatHelperService,
           useValue: {

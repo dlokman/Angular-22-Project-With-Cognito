@@ -2,17 +2,23 @@ import { Routes } from '@angular/router';
 import { autoLoginPartialRoutesGuard } from 'angular-auth-oidc-client';
 
 export const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/chat' },
+  { path: '', pathMatch: 'full', redirectTo: '/chat-1' },
   {
 		path: '',
     loadComponent: () => import('./layout/pages/pages-layout').then(m => m.PagesLayout),
     canActivateChild:  [autoLoginPartialRoutesGuard],   // will redirect to Cognito Login if authenticated
 		children: [
-      { path: 'chat',
-        loadComponent : () => import('./pages/chat/chat').then(m => m.Chat)
+      { path: 'chat-1',
+        loadComponent : () => import('./pages/chat-1/chat-1').then(m => m.Chat1)
       },
-      { path: 'diagram',
-        loadComponent: () => import('./pages/diagram/diagram').then(m => m.Diagram)
+      { path: 'diagram-1',
+        loadComponent: () => import('./pages/diagram-1/diagram-1').then(m => m.Diagram1)
+      },
+      { path: 'chat-2',
+        loadComponent : () => import('./pages/chat-2/chat-2').then(m => m.Chat2)
+      },
+      { path: 'diagram-2',
+        loadComponent: () => import('./pages/diagram-2/diagram-2').then(m => m.Diagram2)
       },
       { path: 'playground',
         loadComponent: () => import('./pages/playground/playground').then(m => m.Playground)
@@ -40,5 +46,5 @@ export const routes: Routes = [
       },
 		]
 	},
-  { path: '**', redirectTo: '/chat'} // catch any unfound routes and redirect to chat page
+  { path: '**', redirectTo: '/chat-1'} // catch any unfound routes and redirect to chat page
 ];

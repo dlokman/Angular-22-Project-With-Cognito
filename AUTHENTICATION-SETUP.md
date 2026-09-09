@@ -112,7 +112,7 @@ If your AgentCore runtime framework does not automatically answer the browser pr
 
 ## 6. Authentication flow
 
-1. User opens `/chat` (or another protected route).
+1. User opens `/chat-1` (or another protected route).
 2. `withAppInitializerAuthCheck()` initializes/restores OIDC state.
 3. `autoLoginPartialRoutesGuard` sees an unauthenticated user and starts authorization.
 4. Browser goes to Cognito Managed Login.
@@ -156,11 +156,11 @@ After deploying Cognito and the JWT-enabled AgentCore Runtime:
 1. `npm install`
 2. fill `aws.local.ts`
 3. `npm start`
-4. open `http://localhost:4200/chat`
+4. open `http://localhost:4200/chat-1`
 5. confirm redirect to Cognito Managed Login
 6. sign in
 7. confirm return through `/auth/callback`
-8. confirm `/chat` loads
+8. confirm `/chat-1` loads
 9. DevTools > Application > Session Storage: verify OIDC state is in session storage, not local storage
 10. send a chat prompt
 11. DevTools > Network: verify AgentCore request has an `Authorization: Bearer ...` header

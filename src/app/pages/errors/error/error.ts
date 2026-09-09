@@ -11,6 +11,6 @@ export class Error {
   router = inject(Router)
 
   goHome() {
-    this.router.navigate(['/chat']);
+    this.router.navigate(['/chat-1']);
   }
 }

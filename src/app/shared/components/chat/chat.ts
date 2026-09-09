@@ -1,8 +1,9 @@
-import { Component, forwardRef, inject, signal } from '@angular/core';
+import { Component, forwardRef, inject, signal, model,input } from '@angular/core';
 import { ChatState, CopilotChatInput, CopilotChatMessageView, CopilotChatView } from '@copilotkit/angular';
 import type { Message } from '@ag-ui/client';
 import { Router } from '@angular/router';
 import { AgentEvent, AgentInterrupt, ChatHelperService } from './chat-helper.service';
+import { AgentCoreConfig } from '../../../core/config-service/config.interface';
 
 @Component({
   selector: 'app-chat',
@@ -21,7 +22,8 @@ export class Chat extends ChatState {
   private readonly chatHelper = inject(ChatHelperService);
   private readonly router = inject(Router);
 
-  readonly messages = signal<Message[]>([]);
+  readonly agentCoreConfig = input.required<AgentCoreConfig>();
+  readonly messages = model<Message[]>([]);
   readonly inputValue = signal('');
   readonly isSubmitting = signal(false);
   readonly interrupt = signal<AgentInterrupt | null>(null);
@@ -31,7 +33,6 @@ export class Chat extends ChatState {
     this.inputValue.set(value);
   }
 
-  // done
   async submitInput(value: string): Promise<void> {
 
     requestAnimationFrame(() => {
@@ -48,7 +49,7 @@ export class Chat extends ChatState {
     this.interrupt.set(null);
     this.addMessage('user', text);
 
-    await this.run(this.chatHelper.sendPrompt(this.sessionId(), text));
+    await this.run(this.chatHelper.sendPrompt(this.sessionId(), text, this.agentCoreConfig()));
   }
 
   newChat(): void {
@@ -71,7 +72,6 @@ export class Chat extends ChatState {
     return this.resume(false);
   }
 
-  //done
   private async resume(approved: boolean): Promise<void> {
     const interrupt = this.interrupt();
 
@@ -82,11 +82,10 @@ export class Chat extends ChatState {
     this.interrupt.set(null);
 
     await this.run(
-      this.chatHelper.respondToInterrupt(this.sessionId(), interrupt.id, approved)
+      this.chatHelper.respondToInterrupt(this.sessionId(), interrupt.id, approved, this.agentCoreConfig())
     );
   }
 
-  //done
   private async run(events: AsyncGenerator<AgentEvent>): Promise<void> {
     const messageId = crypto.randomUUID();
 
@@ -114,7 +113,7 @@ export class Chat extends ChatState {
     }
   }
 
-  // done. id is the id of the message being added. If not provided, a new UUID is generated.
+  // id is the id of the message being added. If not provided, a new UUID is generated.
   private addMessage(role: 'user' | 'assistant', content: string, id = crypto.randomUUID()): void {
     this.messages.update(messages => [
       ...messages,
@@ -122,7 +121,6 @@ export class Chat extends ChatState {
     ]);
   }
 
-  //done
   private appendText(messageId: string, text: string): void {
     this.messages.update(messages =>
       messages.map(message =>
@@ -133,13 +131,12 @@ export class Chat extends ChatState {
     );
   }
 
-  //done
-private removeMessageIfEmpty(messageId: string): void {
-  this.messages.update(messages =>
-    messages.filter(message =>
-      message.id !== messageId ||    // keep other messages
-      Boolean(String(message.content ?? '').trim()), // remove this message if empty
-    ),
-  );
-}
+  private removeMessageIfEmpty(messageId: string): void {
+    this.messages.update(messages =>
+      messages.filter(message =>
+        message.id !== messageId ||    // keep other messages
+        Boolean(String(message.content ?? '').trim()), // remove this message if empty
+      ),
+    );
+  }
 }

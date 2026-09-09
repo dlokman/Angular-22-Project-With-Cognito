@@ -40,7 +40,7 @@ describe('AuthService', () => {
   };
 
   const routerMock = {
-    url: '/chat',
+    url: '/chat-1',
 
     // Used internally by AuthService.logout()
     navigate: vi.fn(() => Promise.resolve(true)),

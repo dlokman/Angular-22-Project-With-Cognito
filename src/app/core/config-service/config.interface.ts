@@ -1,3 +1,9 @@
+export interface AgentCoreConfig {
+  runtimeArn: string;
+  endpoint: string;
+  qualifier: string;
+}
+
 export interface AppConfig {
   region: string;
   cognito: {
@@ -8,9 +14,6 @@ export interface AppConfig {
     redirectUrl: string;
     postLogoutRedirectUri: string;
   };
-  agentCore: {
-    runtimeArn: string;
-    endpoint: string;
-    qualifier: string;
-  }
+  agentCore1: AgentCoreConfig;
+  agentCore2: AgentCoreConfig;
 }

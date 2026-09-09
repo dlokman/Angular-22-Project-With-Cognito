@@ -8,8 +8,14 @@ window.APP_CONFIG = {
     scope: 'openid profile email resource-server-b37271e0/read',  // OpenID Connect scopes + Custom scopes (resource-server-b37271e0/read)
     redirectUrl: 'http://localhost:4200/auth/callback',           // Cognito Callback URL
     postLogoutRedirectUri: 'http://localhost:4200/logout'         // Logout URL
-  },// TODOOOOOOOOOO Change this to Demo2 values for AgentCore
-  agentCore: {
+  },
+  agentCore1: {
+    runtimeArn: 'arn:aws:bedrock-agentcore:us-east-1:742752463290:runtime/restaurantassistant_restaurant_assistant-0zuMLq5kJ2', //'arn:aws:bedrock-agentcore:us-east-1:123456789012:runtime/YOUR_RUNTIME_ID',
+    endpoint: 'https://bedrock-agentcore.us-east-1.amazonaws.com',    //'https://bedrock-agentcore.us-east-1.amazonaws.com',
+    qualifier: 'DEFAULT'
+  },
+  agentCore2: {
+    //runtimeArn: 'arn:aws:bedrock-agentcore:us-east-1:742752463290:runtime/AngularInterruptTest_MyAgent-FShQwX60wH', // Interrupt Test
     runtimeArn: 'arn:aws:bedrock-agentcore:us-east-1:742752463290:runtime/restaurantassistant_restaurant_assistant-0zuMLq5kJ2', //'arn:aws:bedrock-agentcore:us-east-1:123456789012:runtime/YOUR_RUNTIME_ID',
     endpoint: 'https://bedrock-agentcore.us-east-1.amazonaws.com',    //'https://bedrock-agentcore.us-east-1.amazonaws.com',
     qualifier: 'DEFAULT',

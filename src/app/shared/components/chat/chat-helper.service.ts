@@ -1,6 +1,7 @@
 import { Service, inject } from '@angular/core';
-import { AuthService } from '../../core/auth-service/auth-service';
-import { ConfigService } from '../../core/config-service/config-service';
+import { AuthService } from '../../../core/auth-service/auth-service';
+import { AgentCoreConfig } from '../../../core/config-service/config.interface';
+// import { ConfigService } from '../../../core/config-service/config-service';
 
 export interface AgentInterrupt {
   id: string;
@@ -18,26 +19,27 @@ export type AgentEvent = { type: 'text'; text: string } | { type: 'interrupt'; i
 export class ChatHelperService {
 
   private readonly authService = inject(AuthService);
-  private readonly configService = inject(ConfigService);
+  //private readonly configService = inject(ConfigService);
 
-  sendPrompt(sessionId: string, prompt: string): AsyncGenerator<AgentEvent> {
-    return this.invoke(sessionId, { prompt });
+  sendPrompt(sessionId: string, prompt: string, agentCoreConfig: AgentCoreConfig): AsyncGenerator<AgentEvent> {
+    return this.invoke(sessionId, { prompt }, agentCoreConfig);
   }
 
-  respondToInterrupt( sessionId: string, interruptId: string, approved: boolean): AsyncGenerator<AgentEvent> {
+  respondToInterrupt( sessionId: string, interruptId: string, approved: boolean, agentCoreConfig: AgentCoreConfig): AsyncGenerator<AgentEvent> {
     return this.invoke(sessionId, {
-      interruptResponses: [
-        {
-          interruptResponse: {
-            interruptId,
-            response: approved ? 'y' : 'n',
-          },
-        },
-      ],
-    });
+                      interruptResponses: [
+                          {
+                            interruptResponse: {
+                              interruptId,
+                              response: approved ? 'y' : 'n',
+                            },
+                          },
+                        ],
+                      },
+                      agentCoreConfig);
   }
 
-  private async *invoke(sessionId: string, payload: unknown): AsyncGenerator<AgentEvent> {
+  private async *invoke(sessionId: string, payload: unknown, agentCoreConfig: AgentCoreConfig): AsyncGenerator<AgentEvent> {
 
     const accessToken = await this.authService.getAccessToken();
 
@@ -45,12 +47,12 @@ export class ChatHelperService {
       throw new Error('No Cognito access token is available. Please sign in again.');
     }
 
-    const encodedRuntimeArn = encodeURIComponent(this.configService.appConfig.agentCore.runtimeArn);
-    const qualifier = encodeURIComponent(this.configService.appConfig.agentCore.qualifier);
+    const encodedRuntimeArn = encodeURIComponent(agentCoreConfig.runtimeArn);
+    const qualifier = encodeURIComponent(agentCoreConfig.qualifier);
 
     // https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-oauth.html
     const url =
-      `${this.configService.appConfig.agentCore.endpoint}/runtimes/${encodedRuntimeArn}` +
+      `${agentCoreConfig.endpoint}/runtimes/${encodedRuntimeArn}` +
       `/invocations?qualifier=${qualifier}`;
 
     const response = await fetch(url, {
