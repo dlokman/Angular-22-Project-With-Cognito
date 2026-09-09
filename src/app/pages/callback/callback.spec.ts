@@ -1,4 +1,8 @@
+import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+
+import { AuthService } from '../../core/auth-service/auth-service';
 import { Callback } from './callback';
 
 describe('Callback', () => {
@@ -8,6 +12,18 @@ describe('Callback', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Callback],
+      providers: [
+        provideRouter([]),
+        {
+          provide: AuthService,
+          useValue: {
+            authenticated: signal({
+              isAuthenticated: true,
+              allConfigsAuthenticated: [],
+            }),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Callback);

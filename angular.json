@@ -17,7 +17,12 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "allowedCommonJsDependencies": ["lodash"],
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "@jetbrains/websandbox",
+              "partial-json",
+              "chalk",
+              "node-fetch"],
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
@@ -34,7 +39,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
+                  "maximumWarning": "5MB",
                   "maximumError": "10MB"
                 },
                 {
