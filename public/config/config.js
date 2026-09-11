@@ -16,7 +16,7 @@ window.APP_CONFIG = {
   },
   agentCore2: {
     //runtimeArn: 'arn:aws:bedrock-agentcore:us-east-1:742752463290:runtime/AngularInterruptTest_MyAgent-FShQwX60wH', // Interrupt Test
-    runtimeArn: 'arn:aws:bedrock-agentcore:us-east-1:742752463290:runtime/restaurantassistant_restaurant_assistant-0zuMLq5kJ2', //'arn:aws:bedrock-agentcore:us-east-1:123456789012:runtime/YOUR_RUNTIME_ID',
+    runtimeArn: 'arn:aws:bedrock-agentcore:us-east-1:742752463290:runtime/FlightBookingSupport_FlightBookingAgent-Lr8HrM9ArJ', //'arn:aws:bedrock-agentcore:us-east-1:123456789012:runtime/YOUR_RUNTIME_ID',
     endpoint: 'https://bedrock-agentcore.us-east-1.amazonaws.com',    //'https://bedrock-agentcore.us-east-1.amazonaws.com',
     qualifier: 'DEFAULT',
   }
