@@ -28,12 +28,21 @@ export const appInitializerFn = async (): Promise<void> => {
       // (for example, /auth/callback?code=... or an OAuth/OIDC error).
       // Restores existing authentication state from the library's configured storage.
       // Route guards then use the resulting auth state to allow access or start login.
-      oidcSecurityService.checkAuth(),
+      oidcSecurityService.checkAuth()
     );
 
-    // if (authResult.isAuthenticated) {
-    //   await appSettingsService.load();   // if appSettings must load after Authentication but before Page Load
-    // }
+    if (authResult.isAuthenticated) {
+       const accessToken = authResult.accessToken;
+       console.log('Access token:', accessToken);
+
+       const JWTclaims = await firstValueFrom(oidcSecurityService.getPayloadFromAccessToken());
+       const IDTokenClaims = await firstValueFrom(oidcSecurityService.getPayloadFromIdToken());
+       console.log('JWT claims:', JWTclaims);
+       console.log('ID Token claims:', IDTokenClaims);
+       console.log('User Data:', authResult.userData); // user attributes from the ID token (eg name)
+       // TODO. Populate UserProfile singleton service from accessToken: name, group membership (admin vs user: for role based access in app), etc.
+       //  await appSettingsService.load();   // if appSettings must load after Authentication but before Page Load
+    }
 
   } catch (error) {
       console.error('OIDC authentication initialization failed:', error);
