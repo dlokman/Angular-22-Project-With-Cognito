@@ -57,6 +57,7 @@ export class ChatHelperService {
 
     const response = await fetch(url, {
       method: 'POST',
+      cache: 'no-store',
       headers: {
         'Authorization': `Bearer ${accessToken}`,  // username will come from the Cognito access token
         'Content-Type': 'application/json',
