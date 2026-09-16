@@ -2,6 +2,21 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.5.
 
+## Authentication
+ - Angular front end uses Managed Login via Cognito and has security implemented using angular-auth-oidc-client library
+ - Authenticates each end user with Cognito’s Authorization Code flow with PKCE (Production Grade)
+
+## Command Reference
+ng serve
+ng serve --open (to open window)
+ng build  (will put build on dist folder)
+
+1- Without Cognito
+npx http-server .\dist\angular22project\browser to run it
+
+2- With Cognito
+npx serve -s .\dist\angular22project\browser -l 4200   (then load http://localhost:4200)
+
 ## Development server
 
 To start a local development server, run:
