@@ -11,7 +11,7 @@
 
 ### 1) Login UI
 <p align="left">
-  <img src="docs/images/login-ui.jpg" width="65%" alt="Login UI" />
+  <img src="docs/images/login-ui.jpg" width="75%" alt="Login UI" />
 </p>
 
 ### 1) Login UI
