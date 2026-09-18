@@ -1,7 +1,5 @@
 # 🧩Angular22project
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.5.
-
 ## 🧰 Tech Stack
  - Angular 22, TailwindCSS, CopilotChatView (From Copilotkit), Angular Auth OIDC Client (For AWS Cognito)
 
@@ -10,6 +8,11 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
  - Authenticates each end user using OAuth 2.0 / OpenID Connect (OIDC) with Cognito Authorization Code Flow + PKCE
 
 ## 🖥️ UI Snapshots of both RestaurantAgent & FlightBookingAgent Chatbots
+
+<p align="left">
+  <img src="docs/images/login-ui.svg" width="65%" alt="Login UI" />
+  <img src="docs/images/restaurant-agent-ui.jpg" width="49%" alt="RestaurantAgent UI" />
+</p>
 
 ## 📖 Command Reference
 - npm run start
