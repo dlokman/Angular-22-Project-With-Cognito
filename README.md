@@ -9,7 +9,7 @@
 
 ## 🖥️ UI Snapshots of both RestaurantAgent & FlightBookingAgent Chatbots
 
-### 1) Login UI on initial page load(Protected by AWS Cognito – Using OAuth 2.0 / OIDC)
+### 1) Login UI on initial page load (Protected by AWS Cognito – Using OAuth 2.0 / OIDC)
 <p align="left">
   <img src="docs/images/login-ui.jpg" width="100%" alt="Chatbot UI" />
 </p>
