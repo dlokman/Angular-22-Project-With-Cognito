@@ -1,36 +1,39 @@
-# Angular22project
+# 🧩Angular22project
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.5.
 
-## Tech Stack
- - Angular 22, TailwindCSS, Copilotkit, Angular Auth OIDC Client (For AWS Cognito)
+## 🧰 Tech Stack
+ - Angular 22, TailwindCSS, CopilotChatView (From Copilotkit), Angular Auth OIDC Client (For AWS Cognito)
 
-## Authentication
- - Angular front end uses Managed Login via Cognito and has security implemented using angular-auth-oidc-client library
- - Authenticates each end user with Cognito’s Authorization Code flow with PKCE (Production Grade)
+## 🔐 Authentication
+ - Angular frontend uses AWS Managed Login with Amazon Cognito, with authentication implemented using the angular-auth-oidc-client library.
+ - Authenticates each end user using OAuth 2.0 / OpenID Connect (OIDC) with Cognito Authorization Code Flow + PKCE
 
-## Command Reference
-ng serve
-ng serve --open (to open window)
-ng build  (will put build on dist folder)
+## 🖥️ UI Snapshots of both RestaurantAgent & FlightBookingAgent Chatbots
+
+## 📖 Command Reference
+- npm run start
+- ng serve
+- ng serve --open (to open window)
+- ng build  (will put build on dist folder)
 
 1- Without Cognito
-npx http-server .\dist\angular22project\browser to run it
+ - npx http-server .\dist\angular22project\browser to run it
 
 2- With Cognito
-npx serve -s .\dist\angular22project\browser -l 4200   (then load http://localhost:4200)
+ - npx serve -s .\dist\angular22project\browser -l 4200   (then load http://localhost:4200)
 
-## Development server
+## 🌐 Development server
 
 To start a local development server, run:
 
 ```bash
-ng serve
+npm run start
 ```
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+## 🧱 Code scaffolding
 
 Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
@@ -44,7 +47,7 @@ For a complete list of available schematics (such as `components`, `directives`,
 ng generate --help
 ```
 
-## Building
+## 🛠️ Building
 
 To build the project run:
 
@@ -54,7 +57,7 @@ ng build
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
-## Running unit tests
+## 🧪 Running unit tests
 
 To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
 
@@ -62,7 +65,7 @@ To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use th
 ng test
 ```
 
-## Running end-to-end tests
+## 🔄 Running end-to-end tests
 
 For end-to-end (e2e) testing, run:
 
@@ -72,6 +75,6 @@ ng e2e
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-## Additional Resources
+## 📚 Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
