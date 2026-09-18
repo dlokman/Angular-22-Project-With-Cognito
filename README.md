@@ -10,7 +10,7 @@
 ## 🖥️ UI Snapshots of both RestaurantAgent & FlightBookingAgent Chatbots
 
 <p align="left">
-  <img src="docs/images/login-ui.svg" width="85%" alt="Login UI" />
+  <img src="docs/images/login-ui.svg" width="90%" alt="Login UI" />
   <img src="docs/images/restaurant-agent-ui.jpg" width="49%" alt="RestaurantAgent UI" />
 </p>
 
