@@ -9,9 +9,19 @@
 
 ## 🖥️ UI Snapshots of both RestaurantAgent & FlightBookingAgent Chatbots
 
+### 1) Login UI
+<p align="left">
+  <img src="docs/images/login-ui.jpg" width="65%" alt="Login UI" />
+</p>
+
+### 1) Login UI
 <p align="left">
   <img src="docs/images/login-ui.svg" width="65%" alt="Login UI" />
-  <img src="docs/images/restaurant-agent-ui.jpg" width="49%" alt="RestaurantAgent UI" />
+</p>
+
+### 2) Login UI
+<p align="left">
+  <img src="docs/images/get-email-verification-code.svg" width="65%" alt="Login UI" />
 </p>
 
 ## 📖 Command Reference
