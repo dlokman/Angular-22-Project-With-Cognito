@@ -2,6 +2,9 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.5.
 
+## Tech Stack
+ - Angular 22, TailwindCSS, Copilotkit, Angular Auth OIDC Client (For AWS Cognito)
+
 ## Authentication
  - Angular front end uses Managed Login via Cognito and has security implemented using angular-auth-oidc-client library
  - Authenticates each end user with Cognito’s Authorization Code flow with PKCE (Production Grade)
