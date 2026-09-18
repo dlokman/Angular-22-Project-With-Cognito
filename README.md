@@ -9,20 +9,53 @@
 
 ## 🖥️ UI Snapshots of both RestaurantAgent & FlightBookingAgent Chatbots
 
-### 1) Login UI
+### 1) Login UI on initial page load(Protected by AWS Cognito – Managed Login UI using OAuth 2.0 / OIDC)
 <p align="left">
-  <img src="docs/images/login-ui.jpg" width="65%" alt="Login UI" />
+  <img src="docs/images/login-ui.jpg" width="100%" alt="Chatbot UI" />
 </p>
 
-### 1) Login UI
 <p align="left">
-  <img src="docs/images/login-ui.svg" width="65%" alt="Login UI" />
+  <img src="docs/images/get-email-verification-code.jpg" width="100%" alt="Chatbot UI" />
 </p>
 
-### 2) Login UI
+### 2) Restaurant Agent Chabot UI (pointing to AgentCore Runtime Endpoint 1 to Demo Multi-Agents with RAG)
+
 <p align="left">
-  <img src="docs/images/get-email-verification-code.svg" width="65%" alt="Login UI" />
+  <img src="docs/images/restaurant-agent-chatbot-1.jpg" width="100%" alt="Chatbot UI" />
 </p>
+
+<p align="left">
+  <img src="docs/images/restaurant-agent-chatbot-2.jpg" width="100%" alt="Chatbot UI" />
+</p>
+
+<p align="left">
+  <img src="docs/images/restaurant-agent-chatbot-3.jpg" width="100%" alt="Chatbot UI" />
+</p>
+
+### 3) Flight Booking Agent Chabot UI (pointing to AgentCore Runtime Endpoint 2 to Demo AgentCore Memory & AgentCore Gateway)
+
+<p align="left">
+  <img src="docs/images/flight-booking-agent-chatbot-1.jpg" width="100%" alt="Chatbot UI" />
+</p>
+
+<p align="left">
+  <img src="docs/images/flight-booking-agent-chatbot-2.jpg" width="100%" alt="Chatbot UI" />
+</p>
+
+<p align="left">
+  <img src="docs/images/flight-booking-agent-chatbot-3.jpg" width="100%" alt="Chatbot UI" />
+</p>
+
+<p align="left">
+  <img src="docs/images/flight-booking-agent-chatbot-4.jpg" width="100%" alt="Chatbot UI" />
+</p>
+
+### 4) Clicking on Sign out logs you out
+
+<p align="left">
+  <img src="docs/images/sign-out-screen.jpg" width="100%" alt="Chatbot UI" />
+</p>
+
 
 ## 📖 Command Reference
 - npm run start
