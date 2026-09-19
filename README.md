@@ -7,6 +7,7 @@
  - Angular frontend uses AWS Managed Login with Amazon Cognito, with authentication implemented using the angular-auth-oidc-client library.
  - Authenticates each end user using OAuth 2.0 / OpenID Connect (OIDC) with Cognito Authorization Code Flow + PKCE
 
+<a id="ui-shapshots"></a>
 ## 🖥️ UI Snapshots of both RestaurantAgent & FlightBookingAgent Chatbots
 
 ### 1) Login UI on initial page load (Protected by AWS Cognito – Using OAuth 2.0 / OIDC)
