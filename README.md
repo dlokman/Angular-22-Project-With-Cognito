@@ -1,7 +1,7 @@
 # 🧩Angular22project
 
 ## 🧰 Tech Stack
- - Angular 22, TailwindCSS, CopilotChatView (From Copilotkit), Angular Auth OIDC Client (For AWS Cognito)
+ - Angular 22, Typescript, TailwindCSS, CopilotChatView (From Copilotkit), Angular Auth OIDC Client (For AWS Cognito)
 
 ## 🔐 Authentication
  - Angular frontend uses AWS Managed Login with Amazon Cognito, with authentication implemented using the angular-auth-oidc-client library.
